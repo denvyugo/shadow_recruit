@@ -1,0 +1,10 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+	<h1>{{ recruit.name }}</h1>
+		<p>{{ recruit.planet.name }}</p>
+		<ul>
+		{% for task in recruit.task_set.all %}
+		<li>Task {{ task.id }} {% if task.task_done %} Done {% else %} Not Done {% endif %}</li>
+		{% endfor %}
+		</ul>
+{% endblock %}

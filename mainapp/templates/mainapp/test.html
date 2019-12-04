@@ -1,0 +1,18 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+	<h1>Recruit:{{ task.recruit.name }}</h1>
+	<h2>Task number:{{ task.id }}</h2>
+	<form action="{% url 'test' task.id %}" method="post">
+	{% csrf_token %}
+	{% for quiz in task.quiz_set.all %}
+		<p>{{ quiz.question.question }}</p>
+		
+		{% for answer in quiz.question.answers_set.all %}
+		<input type="radio" name="version{{ quiz.question.id }}" id="version{{ forloop.counter }}" value="{{ answer.id }}"/>
+		<label for="version{{ forloop.conter }}">{{ answer.version }}</label><br>
+		{% endfor %}
+	{% endfor %}
+	<input type="submit" value="Test"/>
+	</form>
+	
+{% endblock %}

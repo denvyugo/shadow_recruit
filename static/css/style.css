@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+	background-color: #f5f5f0;
+}
+
+.container {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.centered {
+	display: flex;
+	justify-content: center;
+	color: chartreuse;
+	height: 200px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.centered a {
+	text-decoration: none;
+}

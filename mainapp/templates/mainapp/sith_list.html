@@ -1,0 +1,10 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<h1>Sith list</h1>
+<ul>
+	{% for sith in object_list %}
+	<li><a href="{% url 'shadows' sith.pk %}">{{ sith.planet }}, {{ sith.name }}</a></li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
