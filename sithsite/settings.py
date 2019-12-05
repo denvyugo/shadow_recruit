@@ -30,7 +30,7 @@ def get_env_config():
                 config[key] = value.replace('\n', '')
     else:
         config['SECRET_KEY'] = ''
-        config['DEBUG'] = False
+        config['DEBUG'] = True
     return config
 
 env_config = get_env_config()
