@@ -42,7 +42,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', env_config['SECRET_KEY'])
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', env_config['DEBUG'])
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['shadow-recruit.herokuapp.com']
 
 # Application definition
 
@@ -150,5 +150,6 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Activate django_heroku
 django_heroku.settings(locals())
