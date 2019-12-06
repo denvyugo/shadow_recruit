@@ -40,7 +40,7 @@ env_config = get_env_config()
 SECRET_KEY = os.environ.get('SECRET_KEY', env_config['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', env_config['DEBUG'])
+DEBUG = bool(os.environ.get('DEBUG', env_config['DEBUG']))
 
 ALLOWED_HOSTS = ['shadow-recruit.herokuapp.com']
 
