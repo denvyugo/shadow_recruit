@@ -44,7 +44,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', env_config['SECRET_KEY'])
 DEBUG = False
 
 ALLOWED_HOSTS = ['shadow-recruit.herokuapp.com',
-                 'shadow-recruit.herokuapp.com'
+                 'recruit-shadow.herokuapp.com'
                  ]
 
 # Application definition
