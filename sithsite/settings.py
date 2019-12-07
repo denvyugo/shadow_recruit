@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +31,7 @@ def get_env_config():
                 config[key] = value.replace('\n', '')
     else:
         config['SECRET_KEY'] = ''
-        config['DEBUG'] = False
+        config['DEBUG'] = ''
     return config
 
 env_config = get_env_config()
@@ -39,9 +40,11 @@ env_config = get_env_config()
 SECRET_KEY = os.environ.get('SECRET_KEY', env_config['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', env_config['DEBUG'])
+DEBUG = bool(os.environ.get('DEBUG', env_config['DEBUG']))
 
-ALLOWED_HOSTS = ['shadow-recruit.herokuapp.com']
+ALLOWED_HOSTS = ['shadow-recruit.herokuapp.com',
+                 'recruit-shadow.herokuapp.com'
+                 ]
 
 # Application definition
 
@@ -101,6 +104,7 @@ DATABASES = {
     }
 }
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
