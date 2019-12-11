@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.main, name='main'),
     path('profile/', mainapp.profile, name='profile'),
+    path('add_task/<int:pk>', mainapp.add_task, name='add_task'),
     path('test/<int:pk>', mainapp.test, name='test'),
     path('info/<int:pk>', mainapp.info, name='info'),
     path('sith/', mainapp.SithList.as_view(), name='sith_list'),

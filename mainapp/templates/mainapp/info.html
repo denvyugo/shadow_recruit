@@ -4,7 +4,8 @@
 		<p>{{ recruit.planet.name }}</p>
 		<ul>
 		{% for task in recruit.task_set.all %}
-		<li>Task {{ task.id }} {% if task.task_done %} Done {% else %} Not Done {% endif %}</li>
+		<li><a href="{% url 'test' task.id %}">Task {{ task.id }} {% if task.task_done %} Done {% else %} Not Done {% endif %}</a></li>
 		{% endfor %}
 		</ul>
+		<a class="btn-primary" href="{% url 'add_task' recruit.id %}">New test</a>
 {% endblock %}
