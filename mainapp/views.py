@@ -36,6 +36,12 @@ def profile(request):
     }
     return render(request, 'mainapp/profile.html', context)
 
+def add_task(request, pk):
+    """add new task for current recruit"""
+    recruit = get_object_or_404(Recruit, pk=pk)
+    task = recruit.make_task()
+    return HttpResponseRedirect(reverse('test', kwargs={'pk': task.id}))
+
 def test(request, pk):
     """
     create and render task for recruit
