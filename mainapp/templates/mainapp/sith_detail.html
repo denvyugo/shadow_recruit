@@ -3,8 +3,8 @@
 {% block content %}
 	<h1>Shadows</h1>
 	<ul>
-	{% for recruit in recruits %}
-		<li>{{ recruit.name }}: {{ recruit.last_task_status }}</li>
+	{% for task in tasks %}
+		<li><a href="{% url 'info' task.recruit_id %}">{{ task.recruit.name }}</a>: Task #{{ task.id }} on {{ task.task_date }} was {{ task.task_done }}.</li>
 	{% endfor %}
 	</ul>
 {% endblock %}

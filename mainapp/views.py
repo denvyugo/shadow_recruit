@@ -1,4 +1,5 @@
 """views for mainapp"""
+from django.db.models import Max
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -81,5 +82,5 @@ class SithDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recruits'] = Recruit.objects.all()
+        context['tasks'] = Task.get_last_tasks()
         return context

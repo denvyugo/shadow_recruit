@@ -35,7 +35,10 @@ class Recruit(models.Model):
         return recruit_task
 
     def last_task_status(self):
-        return 'some task was done'
+        last_task_id = \
+             Task.objects.filter(recruit_id=self.id).aggregate(models.Max('id'))
+        task = Task.objects.get(id=last_task_id['id__max'])
+        return task.task_done
 
 
 class Sith(models.Model):
@@ -94,6 +97,16 @@ class Task(models.Model):
             if not is_done: break
         self.task_done = is_done
         self.save()
+
+    @staticmethod
+    def get_last_tasks():
+        """get the latest tasks from db group by recruit"""
+        tasks = Task.objects.raw('''
+                SELECT Max(id) as id, recruit_id, task_date, task_done
+                FROM mainapp_task
+                GROUP BY recruit_id
+                ''')
+        return tasks
 
     def __str__(self):
         return f'Task for {self.recruit.name}, status is {self.task_done}'
