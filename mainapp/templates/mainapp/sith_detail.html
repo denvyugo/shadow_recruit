@@ -2,9 +2,17 @@
 
 {% block content %}
 	<h1>Shadows</h1>
+	<h2>{{ object.name }}</h2>
+	<h2>Recruits ({{ object.number_recruits }}):</h2>
+	<ul>
+	{% for recruit in object.recruits.select_related %}
+		<li>{{ recruit.name }}</li>
+	{% endfor %}
+	</ul>
+	<h2>Candidates:</h2>
 	<ul>
 	{% for task in tasks %}
-		<li><a href="{% url 'info' task.recruit_id %}">{{ task.recruit.name }}</a>: Task #{{ task.id }} on {{ task.task_date }} was {{ task.task_done }}.</li>
+		<li><a href="{% url 'info' task.recruit_id %}">{{ task.recruit.name }}</a>: Task #{{ task.id }} on {{ task.task_date }} was {{ task.task_done }}. <a href="{% url 'select' object.id task.recruit_id %}" class="btn">SELECT</a></li>
 	{% endfor %}
 	</ul>
 {% endblock %}

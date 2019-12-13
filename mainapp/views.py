@@ -72,6 +72,15 @@ def info(request, pk):
     }
     return render(request, 'mainapp/info.html', context)
 
+def select(request, master, pk):
+    """check number of recruits and get one"""
+    sith = get_object_or_404(Sith, pk=master)
+    if Sith.MAX_RECRUIT > sith.number_recruits():
+        recruit = get_object_or_404(Recruit, pk=pk)
+        recruit.master_id = master
+        recruit.save()
+    return HttpResponseRedirect(reverse('shadows', kwargs={'pk': master}))
+
 
 class SithList(ListView):
     model = Sith

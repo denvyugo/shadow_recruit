@@ -13,12 +13,29 @@ class Planet(models.Model):
         return f"Planet '{self.name}'"
 
 
+class Sith(models.Model):
+    """class for Sith"""
+    MAX_RECRUIT = 2
+
+    planet = models.ForeignKey(Planet, on_delete=models.PROTECT)
+    name = models.CharField(verbose_name='Name', max_length=64)
+
+    def number_recruits(self):
+        recruits = self.recruits.select_related()
+        return len(recruits)
+
+    def __str__(self):
+        return f'Sith {self.name}'
+
+
 class Recruit(models.Model):
     """class for Recruit"""
     planet = models.ForeignKey(Planet, on_delete=models.PROTECT)
     name = models.CharField(max_length=64)
     age = models.PositiveIntegerField()
     email = models.EmailField()
+    master = models.ForeignKey(Sith, related_name="recruits",
+                               on_delete=models.PROTECT, null=True, blank=True)
 
     def make_task(self):
         """
@@ -39,16 +56,6 @@ class Recruit(models.Model):
              Task.objects.filter(recruit_id=self.id).aggregate(models.Max('id'))
         task = Task.objects.get(id=last_task_id['id__max'])
         return task.task_done
-
-
-class Sith(models.Model):
-    """class for Sith"""
-    planet = models.ForeignKey(Planet, on_delete=models.PROTECT)
-    name = models.CharField(verbose_name='Name', max_length=64)
-    shadow_hand = models.ForeignKey(Recruit, on_delete=models.PROTECT, null=True, blank=True)
-
-    def __str__(self):
-        return f'Sith {self.name}'
 
 
 class Question(models.Model):
@@ -100,10 +107,13 @@ class Task(models.Model):
 
     @staticmethod
     def get_last_tasks():
-        """get the latest tasks from db group by recruit"""
+        """get the latest tasks from db group by free (w.o. master) recruit"""
         tasks = Task.objects.raw('''
-                SELECT Max(id) as id, recruit_id, task_date, task_done
+                SELECT Max(mainapp_task.id) as id, recruit_id, task_date, task_done
                 FROM mainapp_task
+                INNER JOIN mainapp_recruit 
+                ON mainapp_task.recruit_id = mainapp_recruit.id
+                WHERE mainapp_recruit.master_id Is Null
                 GROUP BY recruit_id
                 ''')
         return tasks

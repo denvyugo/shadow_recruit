@@ -26,4 +26,5 @@ urlpatterns = [
     path('info/<int:pk>', mainapp.info, name='info'),
     path('sith/', mainapp.SithList.as_view(), name='sith_list'),
     path('sith/<int:pk>', mainapp.SithDetail.as_view(), name='shadows'),
+    path('select/<int:master>/<int:pk>', mainapp.select, name='select'),
 ]
