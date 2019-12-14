@@ -12,7 +12,7 @@
 	<h2>Candidates:</h2>
 	<ul>
 	{% for task in tasks %}
-		<li><a href="{% url 'info' task.recruit_id %}">{{ task.recruit.name }}</a>: Task #{{ task.id }} on {{ task.task_date }} was {{ task.task_done }}. <a href="{% url 'select' object.id task.recruit_id %}" class="btn">SELECT</a></li>
+		<li><b>{{ task.recruit.name }}</b>: Task #{{ task.id }} on {{ task.task_date }} was {{ task.task_done }}. <a href="{% url 'select' object.id task.recruit_id %}" class="btn">SELECT</a></li>
 	{% endfor %}
 	</ul>
 {% endblock %}
