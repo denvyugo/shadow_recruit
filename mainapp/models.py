@@ -108,16 +108,21 @@ class Task(models.Model):
     @staticmethod
     def get_last_tasks():
         """get the latest tasks from db group by free (w.o. master) recruit"""
+        # tasks = Task.objects.raw('''
+        #                 SELECT mainapp_task.id, mainapp_task.recruit_id,
+        #                 mainapp_task.task_date, mainapp_task.task_done
+        #                 FROM mainapp_task
+        #                 INNER JOIN mainapp_recruit
+        #                 ON mainapp_task.recruit_id = mainapp_recruit.id
+        #                 WHERE mainapp_recruit.master_id Is Null
+        #                 GROUP BY mainapp_task.recruit_id
+        #                 HAVING Max(mainapp_task.id) = mainapp_task.id
+        #                 ''')
         tasks = Task.objects.raw('''
-                        SELECT mainapp_task.id, mainapp_task.recruit_id, 
-                        mainapp_task.task_date, mainapp_task.task_done
-                        FROM mainapp_task
-                        INNER JOIN mainapp_recruit 
-                        ON mainapp_task.recruit_id = mainapp_recruit.id
-                        WHERE mainapp_recruit.master_id Is Null
-                        GROUP BY mainapp_task.recruit_id
-                        HAVING Max(mainapp_task.id) = mainapp_task.id
-                        ''')
+                                SELECT mainapp_task.id, mainapp_task.recruit_id, 
+                                mainapp_task.task_date, mainapp_task.task_done
+                                FROM mainapp_task
+                                ''')
         return tasks
 
     def __str__(self):
