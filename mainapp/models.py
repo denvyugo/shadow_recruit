@@ -112,9 +112,9 @@ class Task(models.Model):
                         SELECT mainapp_task.id, mainapp_task.recruit_id,
                         mainapp_task.task_date, mainapp_task.task_done
                         FROM mainapp_task
-                        JOIN mainapp_recruit
-                        ON mainapp_task.recruit_id = mainapp_recruit.id
-                        WHERE mainapp_recruit.master_id Is Null
+                        INNER JOIN (SELECT mainapp_recruit.id FROM
+                        mainapp_recruit WHERE mainapp_recruit.master_id Is Null) AS recruits
+                        ON mainapp_task.recruit_id = recruits.id
                         GROUP BY mainapp_task.recruit_id
                         HAVING Max(mainapp_task.id) = mainapp_task.id
                         ''')
