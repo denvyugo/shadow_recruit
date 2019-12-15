@@ -109,12 +109,13 @@ class Task(models.Model):
     def get_last_tasks():
         """get the latest tasks from db group by free (w.o. master) recruit"""
         tasks = Task.objects.raw('''
-                        SELECT Max(mainapp_task.id) as id, mainapp_task.recruit_id,
-                        mainapp_task.task_date, mainapp_task.task_done
+                        SELECT * FROM mainapp_task
+                        WHERE mainapp_task.id IN
+                        (SELECT Max(mainapp_task.id)
                         FROM mainapp_task
                         WHERE mainapp_task.recruit_id IN (SELECT mainapp_recruit.id FROM
                         mainapp_recruit WHERE mainapp_recruit.master_id Is Null)
-                        GROUP BY mainapp_task.recruit_id
+                        GROUP BY mainapp_task.recruit_id)
                         ''')
         return tasks
 
