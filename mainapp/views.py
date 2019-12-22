@@ -53,7 +53,8 @@ def test(request, pk):
     page_title = 'Recruit test'
     recruit_task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
-        versions = list(map(lambda x: int(x), list(request.POST.values())[1:]))
+        # versions = list(map(lambda x: int(x.split(',')[1]), list(request.POST.values())[1:]))
+        versions = list(request.POST.values())[1:]
         recruit_task.check_done(versions)
         return HttpResponseRedirect(reverse('info', kwargs={'pk': recruit_task.recruit_id}))
     else:
@@ -80,6 +81,18 @@ def select(request, master, pk):
         recruit.master_id = master
         recruit.save()
     return HttpResponseRedirect(reverse('shadows', kwargs={'pk': master}))
+
+def quiz(request, pk):
+    """get info about past test"""
+    page_title = 'Recruit passed test'
+    task = get_object_or_404(Task, pk=pk)
+    task_quiz = Quiz.objects.filter(task_id=task.id)
+    context = {
+        'page_title': page_title,
+        'task': task,
+        'quiz': task_quiz
+    }
+    return render(request, 'mainapp/quiz.html', context)
 
 
 class SithList(ListView):

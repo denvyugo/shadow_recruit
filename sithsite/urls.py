@@ -24,6 +24,7 @@ urlpatterns = [
     path('add_task/<int:pk>', mainapp.add_task, name='add_task'),
     path('test/<int:pk>', mainapp.test, name='test'),
     path('info/<int:pk>', mainapp.info, name='info'),
+    path('quiz/<int:pk>', mainapp.quiz, name='quiz'),
     path('sith/', mainapp.SithList.as_view(), name='sith_list'),
     path('sith/<int:pk>', mainapp.SithDetail.as_view(), name='shadows'),
     path('select/<int:master>/<int:pk>', mainapp.select, name='select'),

@@ -84,6 +84,13 @@ class Answers(models.Model):
     version = models.TextField(verbose_name='Version of answer', blank=False)
     is_right = models.BooleanField(verbose_name='Is this answer right')
 
+    def __str__(self):
+        if self.is_right:
+            is_right = 'right'
+        else:
+            is_right = 'not right'
+        return f'Answer "{self.version}" is {is_right}'
+
 
 class Task(models.Model):
     """class for the task for each recruit"""
@@ -94,14 +101,17 @@ class Task(models.Model):
     def check_done(self, versions):
         """
         check if all answers on questions in quiz are right
-        :param versions: list of answers' ids
+        :param versions: list of tuple questions', answers' ids
         :return:
         """
         is_done = False
-        for answer_id in versions:
+        variants = list(map(lambda x: (int(x.split(',')[0]), int(x.split(',')[1])), versions))
+        for question_id, answer_id in variants:
             answer = Answers.objects.filter(pk=answer_id).first()
-            is_done = answer.is_right
-            if not is_done: break
+            quiz = Quiz.objects.filter(task=self.id, question_id=question_id).first()
+            quiz.answer_id = answer_id
+            quiz.save()
+            is_done = is_done or answer.is_right
         self.task_done = is_done
         self.save()
 
@@ -127,3 +137,4 @@ class Quiz(models.Model):
     """class for list of questions of task"""
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.PROTECT)
+    answer = models.ForeignKey(Answers, on_delete=models.PROTECT, null=True)

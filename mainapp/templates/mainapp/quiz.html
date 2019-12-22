@@ -1,0 +1,13 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+	<h1>{{ task.recruit.name }}</h1>
+	<h2>Task number #{{ task.id }}</h2>
+		<ol>
+		{% for test in quiz %}
+			<li>{{ test.question }}</li>
+			<ul>
+				<li>{{ test.answer }}</li>
+			</ul>
+		{% endfor %}
+		</ol>
+{% endblock %}

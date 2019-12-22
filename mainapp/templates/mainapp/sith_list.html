@@ -3,7 +3,7 @@
 <h1>Sith list</h1>
 <ul>
 	{% for sith in object_list %}
-	<li><a href="{% url 'shadows' sith.pk %}">{{ sith.planet }}, {{ sith.name }}</a></li>
+	<li><a href="{% url 'shadows' sith.pk %}">{{ sith.name }}, {{ sith.planet }}</a></li>
 	{% endfor %}
 </ul>
 
