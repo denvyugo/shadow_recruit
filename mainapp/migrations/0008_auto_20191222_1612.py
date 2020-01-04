@@ -15,10 +15,5 @@ class Migration(migrations.Migration):
             model_name='quiz',
             name='answer',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to='mainapp.Answers'),
-        ),
-        migrations.AlterField(
-            model_name='recruit',
-            name='master_id',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='recruits', to='mainapp.Sith'),
-        ),
+        )
     ]
