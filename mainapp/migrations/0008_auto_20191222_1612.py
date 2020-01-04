@@ -12,6 +12,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
+            model_name='recruit',
+            name='master',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='mainapp.Sith'),
+        ),
+        migrations.AddField(
             model_name='quiz',
             name='answer',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to='mainapp.Answers'),
